@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Stopwatch</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #timer {
+      font-size: 5em;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1.2em;
+      cursor: pointer;
+    }
+
+    #start {
+      background-color: black;
+      color: white;
+    }
+
+    #stop {
+      background-color: red;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div id="timer">00:00</div>
+  <button id="start" class="button">BAŞLAT</button>
+  <button id="stop" class="button">DURDUR</button>
+
+  <script>
+    let startTime = 0;
+    let intervalId;
+
+    const timerDisplay = document.getElementById('timer');
+    const startButton = document.getElementById('start');
+    const stopButton = document.getElementById('stop');
+
+    startButton.addEventListener('click', startTimer);
+    stopButton.addEventListener('click', stopTimer);
+
+    function startTimer() {
+      startTime = Date.now();
+      intervalId = setInterval(updateTimer, 10);
+      startButton.disabled = true;
+      stopButton.disabled = false;
+    }
+
+    function stopTimer() {
+      clearInterval(intervalId);
+      startButton.disabled = false;
+      stopButton.disabled = true;
+    }
+
+    function updateTimer() {
+      const elapsedTime = Date.now() - startTime;
+      const minutes = Math.floor(elapsedTime / 60000);
+      const seconds = Math.floor((elapsedTime % 60000) / 10
